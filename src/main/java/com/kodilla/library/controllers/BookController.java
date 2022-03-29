@@ -6,8 +6,10 @@ import com.kodilla.library.exceptions.BookNotFoundException;
 import com.kodilla.library.mapper.BookMapper;
 import com.kodilla.library.service.BookDbService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.StreamingHttpOutputMessage;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +33,7 @@ public class BookController {
         return ResponseEntity.ok(bookMapper.mapToBookDtoList(books));
     }
     @GetMapping(value = "{id}")
-    public ResponseEntity<BookDto> getBook(@PathVariable int id) throws BookNotFoundException {
+    public ResponseEntity<BookDto> getBook(@PathVariable("id") int id) throws BookNotFoundException {
         return ResponseEntity.ok(bookMapper.mapToBookDto(bookDbService.getBook(id)));
 
     }

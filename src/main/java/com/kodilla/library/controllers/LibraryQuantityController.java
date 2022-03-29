@@ -52,10 +52,7 @@ public class LibraryQuantityController {
 
     @GetMapping(value = "titleContains={contains}")
     public ResponseEntity<Long> getAllAvailableByTitle(@PathVariable String contains){
-        List<LibraryQuantity> list = libraryQuantityDbService.getAll();
-        long result = list.stream()
-                .filter(x-> x.getStatus().equals(Status.AVAILABLE) && x.getBook().getTitle().contains(contains))
-                .count();
+        long result = libraryQuantityDbService.getAllAvailableByTitleProcessor(contains);
         return ResponseEntity.ok(result);
     }
 

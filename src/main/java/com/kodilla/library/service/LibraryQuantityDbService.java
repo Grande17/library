@@ -53,4 +53,11 @@ public class LibraryQuantityDbService {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
+    public Long getAllAvailableByTitleProcessor(String contains){
+        List<LibraryQuantity> list = getAll();
+        long result = list.stream()
+                .filter(x-> x.getStatus().equals(Status.AVAILABLE) && x.getBook().getTitle().toLowerCase().contains(contains.toLowerCase()))
+                .count();
+        return result;
+    }
 }

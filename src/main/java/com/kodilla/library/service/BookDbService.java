@@ -42,6 +42,9 @@ public class BookDbService {
     public List<Book> getByPublishedBefore(int year){
         return bookRepository.findByPublishedBefore(year);
     }
+    public void deleteAll(){
+        bookRepository.deleteAll();
+    }
 
 
 }
