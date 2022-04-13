@@ -4,12 +4,9 @@ package com.kodilla.library.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
-import javax.validation.Valid;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,7 +17,6 @@ import javax.validation.constraints.Size;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull(message = "Book ID must not be null")
     @Column(name = "ID", unique = true)
     private int id;
 
@@ -38,4 +34,9 @@ public class Book {
     @Min(value = 1000 ,message = "Book Published must not be null")
     private int published;
 
+    public Book(String title, String author, int published) {
+        this.title = title;
+        this.author = author;
+        this.published = published;
+    }
 }

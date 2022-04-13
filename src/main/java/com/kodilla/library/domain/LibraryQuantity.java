@@ -17,8 +17,7 @@ import javax.validation.constraints.NotNull;
 public class LibraryQuantity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
-    @Column(name = "ID", insertable = true)
+    @Column(name = "ID", unique = true)
     private int id;
 
 
@@ -32,4 +31,8 @@ public class LibraryQuantity {
     @NotNull
     private Book book;
 
+    public LibraryQuantity(Status status, Book book) {
+        this.status = status;
+        this.book = book;
+    }
 }

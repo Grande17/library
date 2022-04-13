@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import javax.validation.ConstraintViolationException;
-import java.util.List;
+
 
 @ControllerAdvice
 public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
@@ -22,7 +22,7 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler(LibraryQuantityNotFound.class)
     public ResponseEntity<Object> handleLibraryQuantityNotFound(LibraryQuantityNotFound e){
-        return new ResponseEntity<>("Object with given id was not found",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("There are no available books with given ID",HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(StatusNotFoundException.class)
     public ResponseEntity<Object> handleStatusNotFound(StatusNotFoundException e){
@@ -36,7 +36,10 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException e){
         return new ResponseEntity<Object>("One or more of the requested fileds are empty!", HttpStatus.BAD_REQUEST);
-
+    }
+    @ExceptionHandler(MaximumBooksBorrowedException.class)
+    public ResponseEntity<Object> handleMaxBooksException( MaximumBooksBorrowedException e){
+        return new ResponseEntity<Object>("Maximum amount of books is already borrowed, please return the books",HttpStatus.NOT_ACCEPTABLE);
     }
 
 }

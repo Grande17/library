@@ -1,24 +1,22 @@
 package com.kodilla.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import java.time.LocalDate;
 
 @Entity(name = "BORROWED")
 @NoArgsConstructor
 @Getter
-
+@AllArgsConstructor
 public class Borrowed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
-    @Column(name = "ID")
+    @Column(name = "ID",unique = true)
     private int id;
 
     @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)

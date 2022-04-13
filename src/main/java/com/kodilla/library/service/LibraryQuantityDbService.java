@@ -9,7 +9,6 @@ import com.kodilla.library.exceptions.StatusNotFoundException;
 import com.kodilla.library.mapper.LibraryQuantityMapper;
 import com.kodilla.library.repository.LibraryQuantityRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

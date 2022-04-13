@@ -20,4 +20,5 @@ public interface BookRepository extends CrudRepository<Book, Integer> {
     List<Book> findByPublished(int year);
     List<Book> findByPublishedAfter(int year);
     List<Book> findByPublishedBefore(int year);
+
 }

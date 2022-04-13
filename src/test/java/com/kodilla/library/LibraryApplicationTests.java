@@ -13,24 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class LibraryApplicationTests {
-
-	@Autowired
-	private BookController bookController;
-	@Autowired
-	private BorrowedController borrowedController;
-	@Autowired
-	private LibraryQuantityController libraryQuantityController;
-	@Autowired
-	private UserController userController;
-
+public class LibraryApplicationTests {
 
 	@Test
 	void contextLoads() throws Exception{
-		assertNotNull(bookController);
-		assertNotNull(borrowedController);
-		assertNotNull(libraryQuantityController);
-		assertNotNull(userController);
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.kodilla.library.controllers;
 
-import com.kodilla.library.Status;
-import com.kodilla.library.domain.Book;
 import com.kodilla.library.domain.LibraryQuantity;
 import com.kodilla.library.domain.dto.LibraryQuantityDto;
 import com.kodilla.library.exceptions.LibraryQuantityNotFound;
@@ -31,10 +29,6 @@ public class LibraryQuantityController {
     public ResponseEntity<List<LibraryQuantityDto>> getStock(){
         List<LibraryQuantity> list = libraryQuantityDbService.getAll();
         return ResponseEntity.ok(mapper.mapToLibraryQuantityDtoList(list));
-    }
-    @GetMapping(value = "test")
-    public LibraryQuantityDto test(){
-        return new LibraryQuantityDto(1,Status.AVAILABLE,new Book(1,"Title","Author",1999));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

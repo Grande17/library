@@ -1,7 +1,6 @@
 package com.kodilla.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,11 +13,9 @@ import java.time.LocalDate;
 @Entity(name = "USERS")
 @NoArgsConstructor
 @Getter
-@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     @Column(name = "ID", unique = true)
     private int id;
 
@@ -31,10 +28,15 @@ public class User {
     private String surname;
 
     @Column(name = "CREATED")
-    @NotNull(message = "User Created must not be null")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate created;
 
 
+    public User(int id, String name, String surname, LocalDate created) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.created = LocalDate.now();
+    }
 
 }
