@@ -2,6 +2,7 @@ package com.kodilla.library.controllers;
 
 import com.kodilla.library.domain.User;
 import com.kodilla.library.domain.dto.UserDto;
+import com.kodilla.library.exceptions.RoleNotFoundException;
 import com.kodilla.library.exceptions.UserNotFoundException;
 import com.kodilla.library.mapper.UserMapper;
 import com.kodilla.library.service.UserDbService;
@@ -60,5 +61,10 @@ public class UserController {
     public ResponseEntity<List<UserDto>> getBySurnameContains(@PathVariable String contains){
         List<User> list = userDbService.getBySurnameContains(contains);
         return ResponseEntity.ok(userMapper.mapToUserDtoList(list));
+    }
+    @PutMapping(value = "role/{userId}/{role}")
+    public ResponseEntity<UserDto> changeRole(@PathVariable int userId, @PathVariable String role) throws UserNotFoundException, RoleNotFoundException {
+        userDbService.changeRole(userId,role);
+        return ResponseEntity.ok().build();
     }
 }

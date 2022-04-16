@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +20,8 @@ class UserRepositoryTest {
     void findAll() {
         //given
         List<User> users = List.of(
-                new User("Name1","Surname1", LocalDate.now()),
-                new User("Name2","Surname2",LocalDate.now())
+                new User("Name1","Surname1","nnn","pass"),
+                new User("Name2","Surname2","nnn","pass")
         );
         repository.saveAll(users);
         //when
@@ -35,8 +34,8 @@ class UserRepositoryTest {
     void deleteById() {
         //given
         List<User> users = List.of(
-                new User("Name1","Surname1", LocalDate.now()),
-                new User("Name2","Surname2",LocalDate.now())
+                new User("Name1","Surname1","nnn","pass"),
+                new User("Name2","Surname2","nnn","pass")
         );
         repository.saveAll(users);
         //when
@@ -51,8 +50,8 @@ class UserRepositoryTest {
     void findById() {
         //given
         List<User> users = List.of(
-                new User("Name1","Surname1", LocalDate.now()),
-                new User("Name2","Surname2",LocalDate.now())
+                new User("Name1","Surname1","nnn","pass"),
+                new User("Name2","Surname2","nnn","pass")
         );
         repository.saveAll(users);
         //when
@@ -66,8 +65,8 @@ class UserRepositoryTest {
     void findByNameContains() {
         //given
         List<User> users = List.of(
-                new User("Name1","Surname1", LocalDate.now()),
-                new User("Name2","Surname2",LocalDate.now())
+                new User("Name1","Surname1","nnn","pass"),
+                new User("Name2","Surname2","nnn","pass")
         );
         repository.saveAll(users);
         //when
@@ -80,8 +79,8 @@ class UserRepositoryTest {
     void findBySurnameContains() {
         //given
         List<User> users = List.of(
-                new User("Name1","Surname1", LocalDate.now()),
-                new User("Name2","Surname2",LocalDate.now())
+                new User("Name1","Surname1","nnn","pass"),
+                new User("Name2","Surname2","nnn","pass")
         );
         repository.saveAll(users);
         //when

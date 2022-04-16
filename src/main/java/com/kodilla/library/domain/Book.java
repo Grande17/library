@@ -4,6 +4,8 @@ package com.kodilla.library.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;

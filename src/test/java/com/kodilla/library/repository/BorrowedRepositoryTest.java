@@ -5,7 +5,6 @@ import com.kodilla.library.domain.Book;
 import com.kodilla.library.domain.Borrowed;
 import com.kodilla.library.domain.LibraryQuantity;
 import com.kodilla.library.domain.User;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -31,8 +30,8 @@ class BorrowedRepositoryTest {
     @Test
     void findAllWhenBorrowedIsNotEmptyList() {
         //given
-        User u1 = new User("Name1","Surname1", LocalDate.now());
-        User u2 = new User("Name2","Surname2", LocalDate.now());
+        User u1 = new User("Name1","Surname1","nnn","pass");
+        User u2 = new User("Name2","Surname2","nnn","pass");
         userRepository.save(u1);
         userRepository.save(u2);
         Book b1 = new Book("Title1","Author1",2000);
@@ -66,8 +65,8 @@ class BorrowedRepositoryTest {
     @Test
     void deleteById() {
         //given
-        User u1 = new User("Name1","Surname1", LocalDate.now());
-        User u2 = new User("Name2","Surname2", LocalDate.now());
+        User u1 = new User("Name1","Surname1","nnn","pass");
+        User u2 = new User("Name2","Surname2","nnn","pass");
         userRepository.save(u1);
         userRepository.save(u2);
         Book b1 = new Book("Title1","Author1",2000);

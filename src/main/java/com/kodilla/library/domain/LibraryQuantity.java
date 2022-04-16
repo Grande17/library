@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @Setter
+@Table
 public class LibraryQuantity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

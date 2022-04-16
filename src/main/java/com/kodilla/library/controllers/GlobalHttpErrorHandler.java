@@ -41,5 +41,9 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleMaxBooksException( MaximumBooksBorrowedException e){
         return new ResponseEntity<Object>("Maximum amount of books is already borrowed, please return the books",HttpStatus.NOT_ACCEPTABLE);
     }
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity<Object> handleRoleNotFound(RoleNotFoundException e){
+        return new ResponseEntity<Object>("Given role does not exists",HttpStatus.BAD_REQUEST);
+    }
 
 }

@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @AllArgsConstructor
+@Table
 public class Borrowed {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
