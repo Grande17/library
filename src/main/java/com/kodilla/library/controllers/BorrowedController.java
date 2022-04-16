@@ -34,7 +34,7 @@ public class BorrowedController {
         List<Borrowed> list = service.getAll();
         return ResponseEntity.ok(mapper.mapToBorrowedDtoList(list));
     }
-    @PostMapping(value = "new")
+    @PostMapping
     public ResponseEntity<Void> borrow(@RequestBody @Valid BorrowRequest borrowRequest) throws LibraryQuantityNotFound, UserNotFoundException, MaximumBooksBorrowedException {
         service.borrowProcessor(borrowRequest);
        return ResponseEntity.ok().build();
@@ -44,7 +44,7 @@ public class BorrowedController {
         service.returnProcessor(id);
         return ResponseEntity.ok().build();
     }
-    @GetMapping(value ="userId/{id}" )
+    @GetMapping(value ="borrowedBy/{id}" )
     public ResponseEntity<List<BorrowedDto>> getAllBooksBorrowedByUserWithId(@PathVariable int id){
         List<Borrowed> result =service.getAllBooksBorrowedByUser(id);
         return ResponseEntity.ok(mapper.mapToBorrowedDtoList(result));

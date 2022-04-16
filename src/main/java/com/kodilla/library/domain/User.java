@@ -39,4 +39,9 @@ public class User {
         this.created = LocalDate.now();
     }
 
+    public User(String name, String surname, LocalDate created) {
+        this.name = name;
+        this.surname = surname;
+        this.created = created;
+    }
 }

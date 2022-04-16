@@ -46,4 +46,11 @@ public class Borrowed {
         this.borrowed = borrowed;
         this.deadline = borrowed.plusDays(30);
     }
+
+    public Borrowed(LibraryQuantity libraryQuantity, User user, LocalDate borrowed) {
+        this.libraryQuantity = libraryQuantity;
+        this.user = user;
+        this.borrowed = borrowed;
+        this.deadline = borrowed.plusDays(30);
+    }
 }
