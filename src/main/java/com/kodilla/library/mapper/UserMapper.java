@@ -22,7 +22,8 @@ public class UserMapper {
                 userDto.getSurname(),
                 userDto.getUsername(),
                 passwordEncoder.encode(userDto.getPassword()),
-                userDto.getAppUserRole()
+                userDto.getAppUserRole(),
+                userDto.getCreated()
         );
     }
     public UserDto mapToUserDto(User user){

@@ -1,7 +1,7 @@
 package com.kodilla.library.domain.dao;
 
 import com.kodilla.library.domain.LibraryQuantity;
-import com.kodilla.library.Status;
+import com.kodilla.library.enums.Status;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

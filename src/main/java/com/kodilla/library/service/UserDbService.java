@@ -9,14 +9,16 @@ import com.kodilla.library.mapper.UserMapper;
 import com.kodilla.library.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-import static com.kodilla.library.AppUserRole.*;
+import static com.kodilla.library.enums.AppUserRole.*;
 
 @Service
 @RequiredArgsConstructor
@@ -35,14 +37,34 @@ public class UserDbService implements UserDetailsService {
     public void deleteUser(int id){
         userRepository.deleteById(id);
     }
-    public User getById(int id) throws UserNotFoundException{
-        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
-    }
     public List<User> getByNameContains(String contains){
         return userRepository.findByNameContains(contains);
     }
     public List<User> getBySurnameContains(String contains){
         return userRepository.findBySurnameContains(contains);
+    }
+
+
+    public User getById(int id) throws UserNotFoundException, IllegalAccessError{
+        Optional<User> loggedIn = userRepository.findByUsername(currentLoggedIn());
+        Optional<User> userToFind = userRepository.findById(id);
+        if (loggedIn.get().getId() == userToFind.get().getId() ||
+        loggedIn.get().getAppUserRole().equals(ADMIN) || loggedIn.get().getAppUserRole().equals(SUPER_ADMIN)){
+            return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+        }else{
+            throw new IllegalAccessError();
+        }
+    }
+
+    public String currentLoggedIn(){
+        String username;
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if(principal instanceof UserDetails) {
+            username = ((UserDetails) principal).getUsername();
+        }else{
+            username = principal.toString();
+        }
+        return username;
     }
 
     @Override
@@ -83,5 +105,17 @@ public class UserDbService implements UserDetailsService {
             throw new RoleNotFoundException();
         }
 
+    }
+    public ResponseEntity<UserDto> updateUserProcessor(UserDto userDto){
+        Optional<User> loggedIn = userRepository.findByUsername(currentLoggedIn());
+        Optional<User> userToUpdate = userRepository.findById(userDto.getId());
+        if (loggedIn.get().getId() == userToUpdate.get().getId() ||
+                loggedIn.get().getAppUserRole().equals(ADMIN) || loggedIn.get().getAppUserRole().equals(SUPER_ADMIN)){
+            User user = mapper.mapToUser(userDto);
+            User savedUser = userRepository.save(user);
+            return ResponseEntity.ok(mapper.mapToUserDto(savedUser));
+        }else{
+            throw new IllegalAccessError();
+        }
     }
 }

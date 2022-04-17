@@ -1,6 +1,6 @@
 package com.kodilla.library.repository;
 
-import com.kodilla.library.Status;
+import com.kodilla.library.enums.Status;
 import com.kodilla.library.domain.Book;
 import com.kodilla.library.domain.LibraryQuantity;
 import org.junit.jupiter.api.Test;

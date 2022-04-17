@@ -1,6 +1,6 @@
 package com.kodilla.library.service;
 
-import com.kodilla.library.Status;
+import com.kodilla.library.enums.Status;
 import com.kodilla.library.domain.Book;
 import com.kodilla.library.domain.Borrowed;
 import com.kodilla.library.domain.LibraryQuantity;

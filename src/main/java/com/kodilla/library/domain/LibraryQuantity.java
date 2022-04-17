@@ -1,6 +1,6 @@
 package com.kodilla.library.domain;
 
-import com.kodilla.library.Status;
+import com.kodilla.library.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

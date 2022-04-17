@@ -1,4 +1,4 @@
-package com.kodilla.library;
+package com.kodilla.library.enums;
 
 
 public enum Status {

@@ -9,12 +9,17 @@ import com.kodilla.library.service.UserDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -27,21 +32,16 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
+    @PreAuthorize("hasAuthority('super_admin')")
     public ResponseEntity<List<UserDto>> getUsers(){
         List<User> list = userDbService.getAllUsers();
         return ResponseEntity.ok(userMapper.mapToUserDtoList(list));
     }
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> addUser(@RequestBody @Valid UserDto userDto){
-        User user = userMapper.mapToUser(userDto);
-        userDbService.saveUser(user);
-        return ResponseEntity.ok().build();
-    }
+
     @PutMapping
+    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDto> updateUser(@RequestBody @Valid UserDto userDto){
-        User user = userMapper.mapToUser(userDto);
-        User savedUser = userDbService.saveUser(user);
-        return ResponseEntity.ok(userMapper.mapToUserDto(savedUser));
+        return userDbService.updateUserProcessor(userDto);
     }
     @DeleteMapping(value = "{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable int id){

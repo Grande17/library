@@ -1,13 +1,12 @@
 package com.kodilla.library.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kodilla.library.AppUserRole;
+import com.kodilla.library.enums.AppUserRole;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
@@ -16,7 +15,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Collections;
 
 
 @Entity(name = "USERS")
@@ -29,7 +27,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", unique = true)
-    private int id;
+    private Integer id;
 
     @Column(name = "NAME")
     @NotNull(message = "User Name must not be null")
@@ -59,14 +57,24 @@ public class User implements UserDetails {
     private Boolean enabled = true;
 
 
-    public User(int id, String name, String surname, String username, String password,AppUserRole appUserRole) {
+    public User(Integer id, String name, String surname, String username, String password, AppUserRole appUserRole, LocalDate created) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.created = LocalDate.now();
         this.username = username;
         this.password = password;
+        this.appUserRole = AppUserRole.USER;
+    }
+
+    public User(Integer id, String name, String surname, String username, String password, AppUserRole appUserRole) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.password = password;
         this.appUserRole = appUserRole;
+        this.created = LocalDate.now();
     }
 
     public User(String name, String surname, String username, String password) {
@@ -78,10 +86,18 @@ public class User implements UserDetails {
         this.appUserRole = AppUserRole.USER;
     }
 
+    public User(String admin, String admin1, String admin2, String admin3, AppUserRole superAdmin) {
+        this.name = admin;
+        this.surname = admin1;
+        this.username = admin2;
+        this.password = admin3;
+        this.created = LocalDate.now();
+        this.appUserRole = AppUserRole.SUPER_ADMIN;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUserRole.name());
-        return Collections.singletonList(authority);
+        return appUserRole.getGrantedAuthority();
     }
 
     @Override

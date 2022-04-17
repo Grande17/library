@@ -1,7 +1,7 @@
 package com.kodilla.library.domain.dto;
 
 import com.kodilla.library.domain.Book;
-import com.kodilla.library.Status;
+import com.kodilla.library.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

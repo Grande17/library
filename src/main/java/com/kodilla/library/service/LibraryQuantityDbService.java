@@ -1,6 +1,6 @@
 package com.kodilla.library.service;
 
-import com.kodilla.library.Status;
+import com.kodilla.library.enums.Status;
 import com.kodilla.library.domain.LibraryQuantity;
 import com.kodilla.library.domain.dao.LibraryQuantityDao;
 import com.kodilla.library.domain.dto.LibraryQuantityDto;

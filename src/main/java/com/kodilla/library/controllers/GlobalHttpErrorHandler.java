@@ -45,5 +45,9 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleRoleNotFound(RoleNotFoundException e){
         return new ResponseEntity<Object>("Given role does not exists",HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(IllegalAccessError.class)
+    public ResponseEntity<Object> handleIllegalAccess(IllegalAccessError e){
+        return new ResponseEntity<Object>("You do not have required permissions to access",HttpStatus.BAD_REQUEST);
+    }
 
 }

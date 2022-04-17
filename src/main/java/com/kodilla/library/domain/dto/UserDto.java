@@ -1,6 +1,6 @@
 package com.kodilla.library.domain.dto;
 
-import com.kodilla.library.AppUserRole;
+import com.kodilla.library.enums.AppUserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
