@@ -11,6 +11,7 @@ import com.kodilla.library.mapper.BorrowedMapper;
 import com.kodilla.library.service.BorrowedDbService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ import java.util.List;
 @RequestMapping("/v1/borrowed")
 @RequiredArgsConstructor
 @Validated
+@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SUPER_ADMIN')")
 public class BorrowedController {
 
     private final BorrowedMapper mapper;

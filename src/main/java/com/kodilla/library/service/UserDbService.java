@@ -3,8 +3,10 @@ package com.kodilla.library.service;
 import com.kodilla.library.domain.User;
 import com.kodilla.library.domain.dao.UserDao;
 import com.kodilla.library.domain.dto.UserDto;
+import com.kodilla.library.exceptions.InsufficientPermissionsException;
 import com.kodilla.library.exceptions.RoleNotFoundException;
 import com.kodilla.library.exceptions.UserNotFoundException;
+import com.kodilla.library.exceptions.UsernameNotAvailableException;
 import com.kodilla.library.mapper.UserMapper;
 import com.kodilla.library.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,14 +47,14 @@ public class UserDbService implements UserDetailsService {
     }
 
 
-    public User getById(int id) throws UserNotFoundException, IllegalAccessError{
+    public User getById(int id) throws UserNotFoundException, InsufficientPermissionsException {
         Optional<User> loggedIn = userRepository.findByUsername(currentLoggedIn());
         Optional<User> userToFind = userRepository.findById(id);
         if (loggedIn.get().getId() == userToFind.get().getId() ||
         loggedIn.get().getAppUserRole().equals(ADMIN) || loggedIn.get().getAppUserRole().equals(SUPER_ADMIN)){
             return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
         }else{
-            throw new IllegalAccessError();
+            throw new InsufficientPermissionsException();
         }
     }
 
@@ -74,11 +76,11 @@ public class UserDbService implements UserDetailsService {
                         String.format("Username %s not found",username)));
     }
 
-    public void signUp(UserDto userDto){
+    public void signUp(UserDto userDto) throws UsernameNotAvailableException {
         boolean userExists = userRepository.findByUsername(userDto.getUsername()).isPresent();
 
         if(userExists){
-            throw new IllegalStateException("Username is taken");
+            throw new UsernameNotAvailableException();
         }
         User user = mapper.mapToUser(userDto);
         userRepository.save(user);
@@ -106,7 +108,7 @@ public class UserDbService implements UserDetailsService {
         }
 
     }
-    public ResponseEntity<UserDto> updateUserProcessor(UserDto userDto){
+    public ResponseEntity<UserDto> updateUserProcessor(UserDto userDto) throws InsufficientPermissionsException {
         Optional<User> loggedIn = userRepository.findByUsername(currentLoggedIn());
         Optional<User> userToUpdate = userRepository.findById(userDto.getId());
         if (loggedIn.get().getId() == userToUpdate.get().getId() ||
@@ -115,7 +117,7 @@ public class UserDbService implements UserDetailsService {
             User savedUser = userRepository.save(user);
             return ResponseEntity.ok(mapper.mapToUserDto(savedUser));
         }else{
-            throw new IllegalAccessError();
+            throw new InsufficientPermissionsException();
         }
     }
 }
