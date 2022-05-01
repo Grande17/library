@@ -35,7 +35,7 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     }
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException e){
-        return new ResponseEntity<Object>("One or more of the requested fileds are empty!", HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<Object>("One or more of the requested fields are empty!", HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(MaximumBooksBorrowedException.class)
     public ResponseEntity<Object> handleMaxBooksException( MaximumBooksBorrowedException e){

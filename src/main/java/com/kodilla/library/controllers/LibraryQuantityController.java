@@ -49,7 +49,6 @@ public class LibraryQuantityController {
 
 
     @GetMapping(value = "titleContains={contains}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Long> getAllAvailableByTitle(@PathVariable String contains){
         long result = libraryQuantityDbService.getAllAvailableByTitleProcessor(contains);
         return ResponseEntity.ok(result);

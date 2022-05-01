@@ -21,19 +21,18 @@ import java.util.List;
 @RequestMapping("/v1/books")
 @RequiredArgsConstructor
 @Validated
+@PreAuthorize("isAuthenticated()")
 public class BookController {
     private final BookDbService bookDbService;
     private final BookMapper bookMapper;
 
 
     @GetMapping
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<BookDto>> getBooks(){
         List<Book> books = bookDbService.getAllBooks();
         return ResponseEntity.ok(bookMapper.mapToBookDtoList(books));
     }
     @GetMapping(value = "{id}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<BookDto> getBook(@PathVariable("id") int id) throws BookNotFoundException {
         return ResponseEntity.ok(bookMapper.mapToBookDto(bookDbService.getBook(id)));
 
@@ -59,19 +58,16 @@ public class BookController {
         return ResponseEntity.ok().build();
     }
     @GetMapping(value = "authorContains={contains}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<BookDto>> getBookByAuthorContains(@PathVariable String contains){
         List<Book> list = bookDbService.getBookByAuthorContains(contains);
         return ResponseEntity.ok(bookMapper.mapToBookDtoList(list));
     }
     @GetMapping(value = "titleContains={contains}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<BookDto>> getBookByTitleContains(@PathVariable String contains){
         List<Book> list = bookDbService.getBookByTitleContains(contains);
         return ResponseEntity.ok(bookMapper.mapToBookDtoList(list));
     }
     @GetMapping(value = "published={year}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<BookDto>> getByPublished(@PathVariable int year){
         List<Book> list = bookDbService.getByPublished(year);
         return ResponseEntity.ok(bookMapper.mapToBookDtoList(list));

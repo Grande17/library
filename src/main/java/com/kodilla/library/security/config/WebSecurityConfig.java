@@ -2,6 +2,8 @@ package com.kodilla.library.security.config;
 
 import com.kodilla.library.enums.AppUserRole;
 import com.kodilla.library.enums.Permissions;
+import com.kodilla.library.security.jwt.JwtTokenVerifier;
+import com.kodilla.library.security.jwt.JwtUsernamePasswordAuthFilter;
 import com.kodilla.library.service.UserDbService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static com.kodilla.library.enums.AppUserRole.*;
@@ -32,12 +35,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration/**").permitAll()
-                .antMatchers("/v1/**").hasAnyRole(USER.name(), ADMIN.name(),SUPER_ADMIN.name())
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/v1/**").hasAnyRole(USER.name(), ADMIN.name(), SUPER_ADMIN.name())
                 .and()
-                .httpBasic();
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilter(new JwtUsernamePasswordAuthFilter(authenticationManager()))
+                .addFilterAfter(new JwtTokenVerifier(),JwtUsernamePasswordAuthFilter.class)
+                .authorizeRequests()
+                .anyRequest()
+                .authenticated();
     }
 
     @Override

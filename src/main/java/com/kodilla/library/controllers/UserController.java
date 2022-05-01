@@ -36,7 +36,6 @@ public class UserController {
     }
 
     @PutMapping
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<UserDto> updateUser(@RequestBody @Valid UserDto userDto) throws InsufficientPermissionsException {
         return userDbService.updateUserProcessor(userDto);
     }
